@@ -29,7 +29,7 @@ df_train['Cabin'] = new_cabin
 
 print(df_train[df_train['Embarked'].isna()])
 df_train['Embarked'].fillna('S', inplace = True)
-df_train['Embarked'].replace({'S' : 0, 'C' : 1, 'Q' : 2}, inplace = True)
+df_train['Embarked'].replace({'S' : 2, 'C' : 1, 'Q' : 0}, inplace = True)
 #df_train = pd.get_dummies(df_train, columns = ['Embarked'])
 
 df_train['Age'].fillna(value = np.random.randint(low = 16, high = 37), inplace = True)
@@ -49,7 +49,7 @@ print(df_train.head())
 y = df_train['Survived']
 X = df_train.drop(['Survived'], axis = 1)
 
-X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.25, random_state = 42)
+X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.20, random_state = 42)
 
 xgb = XGBClassifier()
 xgb.fit(X_train, y_train)
@@ -78,7 +78,7 @@ new_cabin = np.array([0 if x == 'No' else 1 for x in cabin]).T
 df_test['Cabin'] = new_cabin
 
 #df_test = pd.get_dummies(df_test, columns = ['Embarked'])
-df_test['Embarked'].replace({'S' : 0, 'C' : 1, 'Q' : 2}, inplace = True)
+df_test['Embarked'].replace({'S' : 2, 'C' : 1, 'Q' : 0}, inplace = True)
 
 df_test['Age'].fillna(value = np.random.randint(low = 16, high = 37), inplace = True)
 df_test['Fare'].fillna(value = np.mean(df_test['Fare']), inplace = True)
